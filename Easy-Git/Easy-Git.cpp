@@ -6,16 +6,41 @@ using namespace std;
 
 void usage()
 {
-	cout << "Usage of eit" << endl;
+	cout << "Usage of eit:" << endl;
+	cout << "\t-c: commit";
+}
+
+
+void debug(int argc,char* arr[])
+{
+	cout << argc << endl;
+	int i = 1;
+	for (; i < argc; i++) 
+	{
+		cout << arr[i] << ' ';
+	}
+	cout << "\n";
+	system("pause");
 }
 
 
 int runscript(const char* script)
 {
-	const char* command_exec = "git";
-
-	system("pause");
+	system(script);
 	return 0;
+}
+
+
+void runback(const char* type)
+{
+	cout << "Running Git Command: " << type << endl;
+}
+
+
+void runner(const char* command)
+{
+	runback(command);
+	runscript(command);
 }
 
 
@@ -28,19 +53,37 @@ int main(int argc, char* argv[])
 		{
 			cout << "Calling Git...." << endl;
 		}
-
+		// 处理简化参数
 		else 
 		{
-			switch (argv[i][1])
+			switch (argv[i++][1])
 			{
-			case 'w':
-				cout << "w" << endl;
-				break;
+			case 'c':
+				switch (argv[i++][0])
+				{
+				case 'm':
+					switch (argv[i++][0])
+					{
+					case 'a':
+						runner("git commit -m \"Add New Feature\"");
+						break;
+					case 'b':
+						runner("git commit -m \"Bug Fixed\"");
+						break;
+					default:
+						cout << "[ERROR] invalid option : '-c m " << argv[--i][0] << "'" << endl;
+						return -1;
+					}
+					break;
+				default:
+					cout << "[ERROR] invalid option : '-" << argv[i][0] << " " << argv[i][0] << "'" << endl;
+					return -1;
+				}
 			case 'h':
 				usage();
 				return 0;
 			case 'l':
-				switch (argv[++i][0]) 
+				switch (argv[i++][0]) 
 				{
 				case 'd':
 					cout << "d" << endl;
