@@ -43,6 +43,25 @@ void runner(const char* command)
 }
 
 
+int checker(const int argc, const int s, char* argv[])
+{
+	if (argc != s)
+	{
+		cout << "Arg Error!" << endl;
+		for (int i = 0; i < argc; i++) {
+			cout << argv[i] << " ";
+		}
+		cout << "" << endl;
+		usage();
+		return 1;
+	}
+	else
+	{
+		return 0;
+	}
+}
+
+
 int main(int argc, char* argv[])
 {
 	if (argc < 2)
@@ -69,6 +88,10 @@ int main(int argc, char* argv[])
 				switch (argv[i++][0])
 				{
 				case 'm':
+					if (checker(argc, 4, argv))
+					{
+						break;
+					}
 					switch (argv[i++][0])
 					{
 					case 'a':
@@ -84,12 +107,21 @@ int main(int argc, char* argv[])
 						runner("git commit -m \"Deleted Some Files\"");
 						break;
 					default:
-						cout << "[ERROR] invalid option : '-c m " << argv[--i][0] << "'" << endl;
+						string arg4;
+						if (argc < 4) 
+						{
+							arg4 = "";
+						}
+						else
+						{
+							arg4 = argv[--i][0];
+						}
+						cout << "[ERROR] invalid option : '-c m " << arg4 << "'" << endl;
 						return -1;
 					}
 					break;
 				default:
-					cout << "[ERROR] invalid option : '-" << argv[i][0] << " " << argv[i][0] << "'" << endl;
+					cout << "[ERROR] invalid option : '-" << argv[--i][0] << " " << argv[i][0] << "'" << endl;
 					return -1;
 				}
 				break;
