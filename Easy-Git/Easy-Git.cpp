@@ -1,13 +1,12 @@
 ﻿#include <cstring>
 #include <iostream>
-#include <cstdio>
 
 using namespace std;
 
 void usage()
 {
 	cout << "Usage of egit:" << endl;
-	cout << "\t-c: commit";
+	cout << "\t-c: commit" << endl;
 }
 
 
@@ -46,6 +45,11 @@ void runner(const char* command)
 
 int main(int argc, char* argv[])
 {
+	if (argc < 2)
+	{
+		usage();
+	}
+
 	for (int i = 1; i < argc; i++)
 	{
 		// 直接运行GIT命令
@@ -58,6 +62,9 @@ int main(int argc, char* argv[])
 		{
 			switch (argv[i++][1])
 			{
+			case 'a':
+				runner("git add .");
+				break;
 			case 'c':
 				switch (argv[i++][0])
 				{
@@ -70,6 +77,12 @@ int main(int argc, char* argv[])
 					case 'b':
 						runner("git commit -m \"Bug Fixed\"");
 						break;
+					case 'c':
+						runner("git commit -m \"Changed Some Files\"");
+						break;
+					case 'd':
+						runner("git commit -m \"Deleted Some Files\"");
+						break;
 					default:
 						cout << "[ERROR] invalid option : '-c m " << argv[--i][0] << "'" << endl;
 						return -1;
@@ -79,8 +92,12 @@ int main(int argc, char* argv[])
 					cout << "[ERROR] invalid option : '-" << argv[i][0] << " " << argv[i][0] << "'" << endl;
 					return -1;
 				}
+				break;
 			case 'h':
+				cout << "The usage of egit:";
 				usage();
+				cout << "The usage of git";
+				system("git --help");
 				return 0;
 			case 'l':
 				switch (argv[i++][0]) 
@@ -100,7 +117,6 @@ int main(int argc, char* argv[])
 			}
 		}
 	}
-	system("pause");
 	return 0;
 }
 
