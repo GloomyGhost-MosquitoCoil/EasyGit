@@ -1,6 +1,8 @@
 ﻿#include <cstring>
 #include <iostream>
 
+#pragma warning(disable : 4996)
+
 using namespace std;
 
 void usage()
@@ -75,8 +77,21 @@ int main(int argc, char* argv[])
 		if ('-' != argv[i][0]) 
 		{
 			cout << "Calling Git...." << endl;
+
+			string command;
+			command = "git";
+
+			for (int i(1); i < argc; i++) 
+			{
+				string cmd = argv[i];
+				command = command + " " + cmd;
+			}
+			const char* runcmd = command.c_str();
+			runner(runcmd);
 		}
+
 		// 处理简化参数
+
 		else 
 		{
 			switch (argv[i++][1])
