@@ -1,12 +1,12 @@
 ﻿#include <cstring>
 #include <iostream>
-#include<cstdio>
+#include <cstdio>
 
 using namespace std;
 
 void usage()
 {
-	cout << "Usage of eit:" << endl;
+	cout << "Usage of egit:" << endl;
 	cout << "\t-c: commit";
 }
 
