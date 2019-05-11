@@ -107,16 +107,7 @@ int main(int argc, char* argv[])
 						runner("git commit -m \"Deleted Some Files\"");
 						break;
 					default:
-						string arg4;
-						if (argc < 4) 
-						{
-							arg4 = "";
-						}
-						else
-						{
-							arg4 = argv[--i][0];
-						}
-						cout << "[ERROR] invalid option : '-c m " << arg4 << "'" << endl;
+						cout << "[ERROR] invalid option : '-c m " << argv[--i][0] << "'" << endl;
 						return -1;
 					}
 					break;
